@@ -7,31 +7,35 @@ trigger:
 - main
 
 pool:
-  name: Default  # aapka self-hosted agent
+  name: Default
 
 steps:
-# Step 1: Use compatible Node.js
 - task: UseNode@1
   inputs:
     version: '20.x'
 
-# Step 2: Install Angular CLI and app dependencies
 - script: |
     npm install -g @angular/cli
     npm install
   displayName: 'Install dependencies'
 
-# Step 3: Build Angular app
 - script: |
     ng build --configuration=production
   displayName: 'Build Angular App'
 
-# Step 4: Deploy to Azure VM via SSH
+# Debug step
+- script: |
+    echo "✅ DIST FOLDER CONTENT:"
+    ls -R dist
+  displayName: 'Check dist folder name'
+
+# Correct this path after checking ls result
 - task: CopyFilesOverSSH@0
   inputs:
-    sshEndpoint: 'Azure-to-vm'   # 👈 yeh service connection ka naam hai
-    sourceFolder: 'dist/simple-angular-app'      # 👈 isko replace karo Angular build folder name se
+    sshEndpoint: 'Azure-to-vm'
+    sourceFolder: 'dist/simple-angular-app'  # Change this if folder name is different
     contents: '**'
-    targetFolder: '/var/www/html/angular-app'  # 👈 yeh Azure VM ka nginx root folder hai
+    targetFolder: '/var/www/html/angular-app'
     cleanTargetFolder: true
     overwrite: true
+
