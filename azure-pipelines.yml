@@ -30,7 +30,7 @@ steps:
 - task: CopyFilesOverSSH@0
   inputs:
     sshEndpoint: 'Azure-to-vm'   # 👈 yeh service connection ka naam hai
-    sourceFolder: 'dist/your-app-name'      # 👈 isko replace karo Angular build folder name se
+    sourceFolder: 'dist/simple-angular-app'      # 👈 isko replace karo Angular build folder name se
     contents: '**'
     targetFolder: '/var/www/html/angular-app'  # 👈 yeh Azure VM ka nginx root folder hai
     cleanTargetFolder: true
