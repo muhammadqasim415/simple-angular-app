@@ -1,0 +1,41 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- main
+
+pool:
+  name: Default
+  demands:
+    - agent.name -equals myagent1
+
+steps:
+- task: UseNode@1
+  inputs:
+    version: '20.x'
+
+- script: |
+    npm install -g @angular/cli
+    npm install
+  displayName: 'Install dependencies'
+
+- script: |
+    ng build --configuration=production
+  displayName: 'Build Angular App'
+
+- script: |
+    echo "✅ DIST FOLDER CONTENT:"
+    ls -R dist
+  displayName: 'Check dist folder name'
+
+- task: CopyFilesOverSSH@0
+  inputs:
+    sshEndpoint: 'Azure-to-vm'
+    sourceFolder: 'dist/simple-angular-app'  # Is folder name ko ls output se confirm karein
+    contents: '**'
+    targetFolder: '/var/www/html/angular-app'
+    cleanTargetFolder: true
+    overwrite: true
+
