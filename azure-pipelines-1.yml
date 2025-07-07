@@ -33,7 +33,7 @@ steps:
 - task: CopyFilesOverSSH@0
   inputs:
     sshEndpoint: 'testpipeline'
-    sourceFolder: 'dist/simple-angular-app'  # Is folder name ko ls output se confirm karein
+    sourceFolder: 'dist/simple-angularapp'  # Is folder name ko ls output se confirm karein
     contents: '**'
     targetFolder: '/var/www/html/angular-app'
     cleanTargetFolder: true
