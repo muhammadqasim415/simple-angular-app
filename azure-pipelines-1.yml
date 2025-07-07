@@ -32,7 +32,7 @@ steps:
 
 - task: CopyFilesOverSSH@0
   inputs:
-    sshEndpoint: 'Azure-to-vm'
+    sshEndpoint: 'testpipeline'
     sourceFolder: 'dist/simple-angular-app'  # Is folder name ko ls output se confirm karein
     contents: '**'
     targetFolder: '/var/www/html/angular-app'
