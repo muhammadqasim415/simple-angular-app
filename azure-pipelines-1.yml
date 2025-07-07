@@ -9,7 +9,7 @@ trigger:
 pool:
   name: Default
   demands:
-    - agent.name -equals myagent1
+    - agent.name -equals Test-Machine
 
 steps:
 - task: UseNode@1
